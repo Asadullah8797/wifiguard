@@ -480,6 +480,36 @@ def scan_local_devices_from_arp(local_ip: str, gateway_ip: str | None = None, mo
     except Exception:
         pass
 
+    # If ARP was empty in full mode, run a fallback sweep on the common home subnet.
+    if mode == 'full' and not devices and prefix != '192.168.1.':
+        try:
+            _ping_sweep_parallel('192.168.1.', max_workers=80, timeout_ms=300)
+            out = subprocess.check_output(['arp', '-a'], text=True, encoding='utf-8', errors='ignore')
+            for line in out.splitlines():
+                ip_match = re.search(r'([0-9]{1,3}(?:\.[0-9]{1,3}){3})', line)
+                mac_match = re.search(r'([0-9a-fA-F]{2}(?:[-:][0-9a-fA-F]{2}){5})', line)
+                if not ip_match or not mac_match:
+                    continue
+                ip = ip_match.group(1)
+                mac = _normalize_mac(mac_match.group(1))
+                if not _is_private_lan_ip(ip):
+                    continue
+                if not ip.startswith('192.168.1.'):
+                    continue
+                if not mac or mac in ('ff:ff:ff:ff:ff:ff', '00:00:00:00:00:00'):
+                    continue
+                if 'incomplete' in line.lower():
+                    continue
+                devices.append({
+                    'ip': ip,
+                    'mac': mac,
+                    'vendor': 'Unidentified Device',
+                    'hostname': 'No Hostname',
+                    'type': 'Unknown',
+                })
+        except Exception:
+            pass
+
     # De-duplicate by ip+mac
     uniq = []
     seen = set()
@@ -524,8 +554,8 @@ def scan_local_devices_from_arp(local_ip: str, gateway_ip: str | None = None, mo
     return uniq
 
 
-def check_https_connectivity():
-    urls = ['https://www.google.com', 'https://www.cloudflare.com', 'https://www.github.com']
+def check_https_connectivity(urls=None):
+    urls = urls or ['https://www.google.com', 'https://www.cloudflare.com', 'https://www.github.com']
     results = []
     for url in urls:
         try:
@@ -539,8 +569,8 @@ def check_https_connectivity():
     return results
 
 
-def check_ssl_certificates():
-    domains = [('www.google.com', 443), ('www.cloudflare.com', 443)]
+def check_ssl_certificates(domains=None):
+    domains = domains or [('www.google.com', 443), ('www.cloudflare.com', 443)]
     results = []
     for host, port in domains:
         try:
@@ -566,9 +596,9 @@ def check_ssl_certificates():
     return results
 
 
-def check_dns_behavior():
-    domains = {'google.com':    ['142.250.','172.217.','216.58.','74.125.'],
-               'cloudflare.com':['104.16.', '104.17.', '104.18.','104.19.']}
+def check_dns_behavior(domains=None):
+    domains = domains or {'google.com':    ['142.250.','172.217.','216.58.','74.125.'],
+                          'cloudflare.com':['104.16.', '104.17.', '104.18.','104.19.']}
     results = []; suspicious = False
     for domain, prefixes in domains.items():
         try:
@@ -915,8 +945,8 @@ def check_captive_portal():
     return details, detected
 
 
-def check_suspicious_redirects():
-    sites = ['http://www.google.com', 'http://www.github.com']
+def check_suspicious_redirects(sites=None):
+    sites = sites or ['http://www.google.com', 'http://www.github.com']
     results = []; suspicious = False
     for url in sites:
         try:
@@ -1747,64 +1777,32 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/scan', methods=['POST'])
-def scan():
-    scan_start = time.time()
-    body       = request.get_json(silent=True) or {}
-    client_ip  = body.get('client_ip') or get_client_ip(request)
-    scan_mode  = (body.get('scan_mode') or 'quick').strip().lower()
-    if scan_mode not in ('quick', 'full'):
-        scan_mode = 'quick'
-    try:
-        with ThreadPoolExecutor(max_workers=8) as ex:
-            futs = {
-                ex.submit(fetch_network_info, client_ip): 'network_info',
-                ex.submit(check_https_connectivity): 'https',
-                ex.submit(check_ssl_certificates): 'ssl',
-                ex.submit(check_dns_behavior): 'dns',
-                ex.submit(check_dns_reputation_with_trusted): 'dns_rep',
-                ex.submit(check_captive_portal): 'portal',
-                ex.submit(check_suspicious_redirects): 'redirects',
-                ex.submit(get_default_gateway_info): 'gateway',
-                ex.submit(get_local_ip): 'local_ip',
-            }
-            out = {}
-            for f in as_completed(futs):
-                out[futs[f]] = f.result()
+def _build_scan_result(scan_mode, network_info, local_ip, https_results, ssl_results, dns_results,
+                       dns_suspicious, dns_rep_results, dns_trusted_mismatch, portal_details,
+                       captive_portal, redirect_results, redirect_suspicious, mitm_warnings,
+                       devices, gateway, scan_start):
+    failed_ssl_count = sum(1 for r in ssl_results if not r.get('valid'))
+    score, breakdown = calculate_risk_score(
+        https_results, ssl_results, dns_suspicious,
+        captive_portal, redirect_suspicious, mitm_warnings,
+        dns_trusted_mismatch=dns_trusted_mismatch,
+    )
+    strong_indicators = 0
+    if failed_ssl_count > 0:
+        strong_indicators += 1
+    if redirect_suspicious:
+        strong_indicators += 1
+    if len(mitm_warnings) >= 2:
+        strong_indicators += 1
+    status, color = classify_risk(score, strong_indicators=strong_indicators)
+    confidence = calculate_confidence(https_results, ssl_results, dns_results, redirect_results, portal_details)
+    recommendations = generate_recommendations(score, captive_portal, dns_suspicious,
+                                               failed_ssl_count, redirect_suspicious, mitm_warnings)
+    scan_duration = round(time.time() - scan_start, 2)
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        network_info = out['network_info']
-        https_results = out['https']
-        ssl_results = out['ssl']
-        dns_results, dns_suspicious = out['dns']
-        dns_rep_results, dns_trusted_mismatch = out['dns_rep']
-        portal_details, captive_portal = out['portal']
-        redirect_results, redirect_suspicious = out['redirects']
-        gateway = out['gateway']
-        local_ip = out['local_ip']
-        devices = scan_local_devices_from_arp(local_ip=local_ip, gateway_ip=gateway.get('ip'), mode=scan_mode)
-
-        mitm_warnings = check_mitm_heuristics(ssl_results, dns_results, https_results)
-
-        failed_ssl_count = sum(1 for r in ssl_results if not r.get('valid'))
-
-        score, breakdown = calculate_risk_score(
-            https_results, ssl_results, dns_suspicious,
-            captive_portal, redirect_suspicious, mitm_warnings,
-            dns_trusted_mismatch=dns_trusted_mismatch,
-        )
-        strong_indicators = 0
-        if failed_ssl_count > 0:
-            strong_indicators += 1
-        if redirect_suspicious:
-            strong_indicators += 1
-        if len(mitm_warnings) >= 2:
-            strong_indicators += 1
-        status, color = classify_risk(score, strong_indicators=strong_indicators)
-        confidence = calculate_confidence(https_results, ssl_results, dns_results, redirect_results, portal_details)
-        recommendations  = generate_recommendations(score, captive_portal, dns_suspicious,
-                                                    failed_ssl_count, redirect_suspicious, mitm_warnings)
-        scan_duration    = round(time.time() - scan_start, 2)
-        timestamp        = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    gateway_changed = False
+    if scan_mode == 'full':
         gateway_state_path = os.path.join(DATA_DIR, 'gateway_state.json')
         prev_gw_raw = _read_json_file(gateway_state_path)
         prev_gw = prev_gw_raw if isinstance(prev_gw_raw, dict) else {}
@@ -1812,6 +1810,8 @@ def scan():
         gateway_changed = bool(prev_mac and gateway.get('mac') and prev_mac != gateway.get('mac'))
         _write_json_file(gateway_state_path, {'mac': gateway.get('mac'), 'ip': gateway.get('ip'), 'timestamp': timestamp})
 
+    new_keys = set()
+    if scan_mode == 'full':
         device_state_path = os.path.join(DATA_DIR, 'devices_state.json')
         prev_dev_raw = _read_json_file(device_state_path)
         prev_devices = prev_dev_raw.get('devices', []) if isinstance(prev_dev_raw, dict) else []
@@ -1821,72 +1821,161 @@ def scan():
         for d in devices:
             key = (d.get('ip'), d.get('mac'))
             d['is_new'] = key in new_keys
-            d['is_unknown'] = d.get('vendor') == 'Unknown'
-            if d['is_new']:
-                d['status_tag'] = 'new'
-            elif d['is_unknown']:
-                d['status_tag'] = 'unknown'
-            else:
-                d['status_tag'] = 'known'
+            d['is_unknown'] = d.get('vendor') in ('Unknown', 'Unidentified Device')
+            d['status_tag'] = 'new' if d['is_new'] else ('unknown' if d['is_unknown'] else 'known')
         _write_json_file(device_state_path, {'timestamp': timestamp, 'devices': devices})
 
-        findings = []
-        if failed_ssl_count:
-            findings.append('SSL certificate validation failed on one or more test domains.')
-        if redirect_suspicious:
-            findings.append('Some HTTP endpoints did not upgrade cleanly to HTTPS.')
-        if dns_suspicious:
-            findings.append('DNS resolution contains unexpected ranges for known domains (low confidence signal).')
-        if dns_trusted_mismatch:
-            findings.append('Resolver output differs from trusted resolver for some domains (not direct proof of attack).')
-        if captive_portal:
-            findings.append('Captive portal behavior detected; this is common on guest/public networks.')
-        if mitm_warnings:
-            findings.extend(mitm_warnings[:2])
-        if gateway_changed:
-            findings.append('Default gateway MAC changed from previous scan. Verify router/network authenticity.')
-        if new_keys:
-            findings.append(f'New device detected on your network ({len(new_keys)}).')
+    findings = []
+    if failed_ssl_count:
+        findings.append('SSL certificate validation failed on one or more test domains.')
+    if redirect_suspicious:
+        findings.append('Some HTTP endpoints did not upgrade cleanly to HTTPS.')
+    if dns_suspicious:
+        findings.append('DNS resolution contains unexpected ranges for known domains (low confidence signal).')
+    if dns_trusted_mismatch:
+        findings.append('Resolver output differs from trusted resolver for some domains (not direct proof of attack).')
+    if captive_portal:
+        findings.append('Captive portal behavior detected; this is common on guest/public networks.')
+    if mitm_warnings:
+        findings.extend(mitm_warnings[:2])
+    if gateway_changed:
+        findings.append('Default gateway MAC changed from previous scan. Verify router/network authenticity.')
+    if new_keys:
+        findings.append(f'New device detected on your network ({len(new_keys)}).')
+    if scan_mode == 'quick':
+        findings.append('Device scan skipped (Quick mode).')
 
-        result = {
-            'timestamp': timestamp, 'client_ip': network_info['public_ip'],
-            'network_info': {**network_info, 'local_ip': local_ip}, 'scan_duration_sec': scan_duration,
-            'risk_score': score, 'status': status, 'color': color,
-            'confidence': confidence,
-            'findings': findings,
-            'breakdown': breakdown,
-            'checks': {'https': https_results, 'ssl': ssl_results, 'dns': dns_results,
-                       'captive_portal': portal_details, 'redirects': redirect_results},
-            'mitm_warnings': mitm_warnings, 'recommendations': recommendations,
-            'dns_suspicious': dns_suspicious, 'captive_portal_detected': captive_portal,
-            'redirect_suspicious': redirect_suspicious,
-            'dns_reputation': {'trusted_dns': '8.8.8.8', 'results': dns_rep_results,
-                               'mismatch': dns_trusted_mismatch},
-            'devices': {
-                'count': len(devices),
-                'new_count': len(new_keys),
-                'scan_mode': scan_mode,
-                'list': devices,
-                'disclaimer': 'Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall.'
-            },
-            'gateway': {'ip': gateway.get('ip'), 'mac': gateway.get('mac'), 'changed': gateway_changed},
-            'disclaimer': 'This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.',
+    devices_payload = {
+        'count': len(devices),
+        'new_count': len(new_keys),
+        'scan_mode': scan_mode,
+        'list': devices,
+        'total_devices': len(devices),
+        'disclaimer': 'Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall.'
+    }
+    if scan_mode == 'quick':
+        devices_payload['skipped'] = True
+        devices_payload['message'] = 'Device scan skipped (Quick mode)'
+    elif len(devices) == 0:
+        devices_payload['message'] = 'Device scan not available in this environment'
+
+    return {
+        'mode': scan_mode,
+        'timestamp': timestamp,
+        'client_ip': network_info['public_ip'],
+        'network_info': {**network_info, 'local_ip': local_ip},
+        'scan_duration_sec': scan_duration,
+        'risk_score': score,
+        'score': score,
+        'status': status,
+        'color': color,
+        'confidence': confidence,
+        'findings': findings,
+        'breakdown': breakdown,
+        'checks': {'https': https_results, 'ssl': ssl_results, 'dns': dns_results,
+                   'captive_portal': portal_details, 'redirects': redirect_results},
+        'mitm_warnings': mitm_warnings,
+        'recommendations': recommendations,
+        'dns_suspicious': dns_suspicious,
+        'captive_portal_detected': captive_portal,
+        'redirect_suspicious': redirect_suspicious,
+        'dns_reputation': {'trusted_dns': '8.8.8.8', 'results': dns_rep_results, 'mismatch': dns_trusted_mismatch},
+        'devices': devices_payload,
+        'gateway': {'ip': gateway.get('ip'), 'mac': gateway.get('mac'), 'changed': gateway_changed},
+        'disclaimer': 'This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.',
+    }
+
+
+def run_quick_scan(client_ip: str):
+    scan_start = time.time()
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        futs = {
+            ex.submit(fetch_network_info, client_ip): 'network_info',
+            ex.submit(check_https_connectivity, ['https://www.google.com', 'https://www.cloudflare.com']): 'https',
+            ex.submit(check_ssl_certificates, [('www.google.com', 443)]): 'ssl',
+            ex.submit(check_dns_behavior, {'google.com': ['142.250.', '172.217.', '216.58.', '74.125.']}): 'dns',
+            ex.submit(get_default_gateway_info): 'gateway',
+            ex.submit(get_local_ip): 'local_ip',
         }
+        out = {futs[f]: f.result() for f in as_completed(futs)}
 
+    network_info = out['network_info']
+    https_results = out['https']
+    ssl_results = out['ssl']
+    dns_results, dns_suspicious = out['dns']
+    gateway = out['gateway']
+    local_ip = out['local_ip']
+
+    # Quick mode skips heavy checks by design.
+    redirect_results, redirect_suspicious = [], False
+    portal_details, captive_portal = [], False
+    dns_rep_results, dns_trusted_mismatch = [], False
+    mitm_warnings = check_mitm_heuristics(ssl_results, dns_results, https_results)
+    devices = []
+
+    return _build_scan_result('quick', network_info, local_ip, https_results, ssl_results, dns_results,
+                              dns_suspicious, dns_rep_results, dns_trusted_mismatch, portal_details,
+                              captive_portal, redirect_results, redirect_suspicious, mitm_warnings,
+                              devices, gateway, scan_start)
+
+
+def run_full_scan(client_ip: str):
+    scan_start = time.time()
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        futs = {
+            ex.submit(fetch_network_info, client_ip): 'network_info',
+            ex.submit(check_https_connectivity, ['https://www.google.com', 'https://www.cloudflare.com', 'https://www.github.com']): 'https',
+            ex.submit(check_ssl_certificates, [('www.google.com', 443), ('www.cloudflare.com', 443), ('www.github.com', 443)]): 'ssl',
+            ex.submit(check_dns_behavior): 'dns',
+            ex.submit(check_dns_reputation_with_trusted): 'dns_rep',
+            ex.submit(check_captive_portal): 'portal',
+            ex.submit(check_suspicious_redirects): 'redirects',
+            ex.submit(get_default_gateway_info): 'gateway',
+            ex.submit(get_local_ip): 'local_ip',
+        }
+        out = {futs[f]: f.result() for f in as_completed(futs)}
+
+    network_info = out['network_info']
+    https_results = out['https']
+    ssl_results = out['ssl']
+    dns_results, dns_suspicious = out['dns']
+    dns_rep_results, dns_trusted_mismatch = out['dns_rep']
+    portal_details, captive_portal = out['portal']
+    redirect_results, redirect_suspicious = out['redirects']
+    gateway = out['gateway']
+    local_ip = out['local_ip']
+    devices = scan_local_devices_from_arp(local_ip=local_ip, gateway_ip=gateway.get('ip'), mode='full')
+    mitm_warnings = check_mitm_heuristics(ssl_results, dns_results, https_results)
+
+    return _build_scan_result('full', network_info, local_ip, https_results, ssl_results, dns_results,
+                              dns_suspicious, dns_rep_results, dns_trusted_mismatch, portal_details,
+                              captive_portal, redirect_results, redirect_suspicious, mitm_warnings,
+                              devices, gateway, scan_start)
+
+
+@app.route('/scan', methods=['POST'])
+def scan():
+    body = request.get_json(silent=True) or {}
+    client_ip = body.get('client_ip') or get_client_ip(request)
+    scan_mode = (body.get('scan_mode') or 'quick').strip().lower()
+    if scan_mode not in ('quick', 'full'):
+        scan_mode = 'quick'
+    try:
+        result = run_quick_scan(client_ip) if scan_mode == 'quick' else run_full_scan(client_ip)
         scan_id = int(time.time() * 1000)
         result['scan_id'] = scan_id
         _append_scan_log({
             'id': scan_id,
             'created_at': datetime.datetime.utcnow().isoformat(),
-            'timestamp': timestamp,
-            'public_ip': network_info.get('public_ip'),
-            'city': network_info.get('city'),
-            'country': network_info.get('country'),
-            'isp': network_info.get('isp'),
-            'risk_score': score,
-            'status': status,
-            'color': color,
-            'duration': scan_duration,
+            'timestamp': result.get('timestamp'),
+            'public_ip': result.get('network_info', {}).get('public_ip'),
+            'city': result.get('network_info', {}).get('city'),
+            'country': result.get('network_info', {}).get('country'),
+            'isp': result.get('network_info', {}).get('isp'),
+            'risk_score': result.get('risk_score'),
+            'status': result.get('status'),
+            'color': result.get('color'),
+            'duration': result.get('scan_duration_sec'),
             'result': result,
         }, limit=50)
         return jsonify({'success': True, 'data': result})

@@ -251,9 +251,16 @@ function renderResults(d) {
   const dev = d.devices || { count: 0, list: [], scan_mode: currentScanMode };
   const hasNew = (dev.new_count || 0) > 0;
   const modeLabel = (dev.scan_mode || 'quick').toUpperCase();
-  setBadge('devBadge', hasNew ? 'warn' : (dev.count > 0 ? 'ok' : 'warn'), `${dev.count || 0} DEVICE(S) · ${modeLabel}`);
+  const devCount = Number(dev.total_devices ?? dev.count ?? 0) || 0;
+  const badgeTone = dev.skipped ? 'warn' : (hasNew ? 'warn' : (devCount > 0 ? 'ok' : 'warn'));
+  setBadge('devBadge', badgeTone, `Devices Connected: ${devCount} · ${modeLabel}`);
   const devBody = document.getElementById('devBody');
   if (devBody) {
+    if (dev.skipped) {
+      const disclaimer = `<div class="check-row"><span class="check-icon">ℹ️</span><span class="check-text">Note<span class="check-sub">${escapeHtml(dev.disclaimer || 'Device detection is based on ARP cache and active probing.')}</span></span></div>`;
+      devBody.innerHTML = `<div class="check-row"><span class="check-icon">⚡</span><span class="check-text">Device scan skipped (Quick mode)<span class="check-sub">Switch to Full Scan for ARP + active probing and accurate device count.</span></span></div>${disclaimer}`;
+      return;
+    }
     const rows = (dev.list || []).slice(0, 12).map(x => {
       const tag = x.status_tag === 'new' ? '🟡 New' : (x.status_tag === 'unknown' ? '⚠ Unknown' : '🟢 Known');
       const typeIcon = x.type === 'Mobile' ? '📱'
@@ -274,8 +281,12 @@ function renderResults(d) {
       }
       return `<div class="check-row"><span class="check-icon">${typeIcon}</span><span class="check-text">${label}<span class="check-sub">${escapeHtml(x.mac)} · ${tag}</span></span></div>`;
     }).join('');
+    const emptyMsg = escapeHtml(dev.message || 'No local ARP entries found');
+    const emptySub = dev.message
+      ? 'Try Full Scan again after local network traffic is active.'
+      : 'Device scan may require local network activity.';
     const disclaimer = `<div class="check-row"><span class="check-icon">ℹ️</span><span class="check-text">Note<span class="check-sub">${escapeHtml(dev.disclaimer || 'Device detection is based on ARP cache and active probing.')}</span></span></div>`;
-    devBody.innerHTML = (rows || `<div class="check-row"><span class="check-icon">ℹ️</span><span class="check-text">No local ARP entries found<span class="check-sub">Device scan may require local network activity.</span></span></div>`) + disclaimer;
+    devBody.innerHTML = (rows || `<div class="check-row"><span class="check-icon">ℹ️</span><span class="check-text">${emptyMsg}<span class="check-sub">${escapeHtml(emptySub)}</span></span></div>`) + disclaimer;
   }
 
   const gw = d.gateway || {};

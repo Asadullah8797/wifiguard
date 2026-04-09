@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-09 13:01:47",
+  "timestamp": "2026-04-09 15:51:47",
   "devices": [
     {
       "ip": "192.168.1.1",
@@ -12,8 +12,18 @@
       "status_tag": "known"
     },
     {
-      "ip": "192.168.1.13",
-      "mac": "E0:01:C7:CF:F7:A8",
+      "ip": "192.168.1.4",
+      "mac": "8E:1C:AC:54:07:89",
+      "vendor": "Unidentified Device",
+      "hostname": "MSI",
+      "type": "Generic Device",
+      "is_new": true,
+      "is_unknown": false,
+      "status_tag": "new"
+    },
+    {
+      "ip": "192.168.1.8",
+      "mac": "6E:A5:93:7D:41:F7",
       "vendor": "Unidentified Device",
       "hostname": "No Hostname",
       "type": "Generic Device",
@@ -22,9 +32,9 @@
       "status_tag": "new"
     },
     {
-      "ip": "192.168.1.63",
-      "mac": "58:02:05:95:FD:B2",
-      "vendor": "AzureWave Technology Inc.",
+      "ip": "192.168.1.36",
+      "mac": "FA:DE:08:9F:D9:11",
+      "vendor": "Unidentified Device",
       "hostname": "No Hostname",
       "type": "Generic Device",
       "is_new": true,
@@ -37,9 +47,9 @@
       "vendor": "AzureWave Technology Inc.",
       "hostname": "DESKTOP-A6P6FGA",
       "type": "Laptop/Desktop",
-      "is_new": true,
+      "is_new": false,
       "is_unknown": false,
-      "status_tag": "new"
+      "status_tag": "known"
     }
   ]
 }
