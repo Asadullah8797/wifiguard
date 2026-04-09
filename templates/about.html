@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}About — WiFiGuard{% endblock %}
+
+{% block content %}
+  <div class="page-head">
+    <div>
+      <div class="page-kicker">ABOUT WIFIGUARD</div>
+      <h1 class="page-title">Public WiFi Security Analyzer</h1>
+      <p class="page-sub">A practical cybersecurity console for travelers and public WiFi users.</p>
+    </div>
+  </div>
+
+  <section class="about-grid">
+    <div class="detail-card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span>What WiFiGuard does</span>
+      </div>
+      <div class="card-body about-body">
+        WiFiGuard runs fast network safety checks and produces an actionable risk score (0–100).
+        It highlights red flags that commonly appear on unsafe public networks: captive portals,
+        DNS manipulation, TLS interception symptoms, and insecure redirect patterns.
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+        </svg>
+        <span>How detection works</span>
+      </div>
+      <div class="card-body about-body">
+        WiFiGuard combines multiple indicators into a “Smart Risk Engine”:
+        HTTPS reachability, SSL certificate validation, DNS analysis, trusted DNS comparison (8.8.8.8),
+        captive portal interception checks, redirect analysis, plus heuristic Evil Twin signals.
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <span>Use cases</span>
+      </div>
+      <div class="card-body about-body">
+        <ul class="about-list">
+          <li><b>Travelers</b>: quickly assess hotel and airport WiFi before logging in.</li>
+          <li><b>Remote workers</b>: validate coffee shop WiFi when handling sensitive work.</li>
+          <li><b>Public WiFi users</b>: detect captive portals and suspicious DNS behavior early.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

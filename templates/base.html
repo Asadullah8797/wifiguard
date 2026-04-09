@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}WiFiGuard{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="noise-overlay"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="/" aria-label="WiFiGuard Dashboard">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+          <path d="M20 4 L36 11 L36 22 C36 30.8 28.8 38.4 20 40 C11.2 38.4 4 30.8 4 22 L4 11 Z" fill="url(#shieldGrad)"/>
+          <path d="M14 20 L18 24 L26 16" stroke="#0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="shieldGrad" x1="20" y1="4" x2="20" y2="40" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00ffe0" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#0066ff" stop-opacity="0.8"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="logo-text">WiFi<span class="accent">Guard</span></span>
+      </a>
+
+      <nav class="nav">
+        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Dashboard</a>
+        <a class="nav-link {% if request.path.startswith('/website') %}active{% endif %}" href="/website">Website</a>
+        <a class="nav-link {% if request.path.startswith('/history') %}active{% endif %}" href="/history">History</a>
+        <a class="nav-link {% if request.path.startswith('/about') %}active{% endif %}" href="/about">About</a>
+      </nav>
+
+      <div class="header-right">
+        <div class="live-indicator" title="Monitoring toggles on Dashboard">
+          <div class="live-dot"></div>
+          <span class="live-label">LIVE</span>
+        </div>
+        <div class="user-menu">
+          <div class="user-avatar">WG</div>
+          <span class="user-name">Heuristic Console</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p>WiFiGuard &copy; 2026 &nbsp;·&nbsp; For educational &amp; portfolio use &nbsp;·&nbsp;
+       This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}History — WiFiGuard{% endblock %}
+
+{% block content %}
+  <div class="page-head">
+    <div>
+      <div class="page-kicker">LOG SYSTEM</div>
+      <h1 class="page-title">Scan History</h1>
+      <p class="page-sub">Previous scans with timestamp, risk score, status, and report export (when available).</p>
+    </div>
+    <div class="page-actions">
+      <a class="ghost-btn" href="/">Run a Scan →</a>
+    </div>
+  </div>
+
+  <section class="history-section" style="margin-top:1rem">
+    <div class="section-title-row">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="12 8 12 12 14 14"/>
+          <path d="M3.05 11a9 9 0 1 0 .5-4"/><polyline points="3 3 3 7 7 7"/>
+        </svg>
+        Recent Scans
+      </h2>
+      <span class="history-count" id="historyCount">—</span>
+    </div>
+
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Score</th>
+            <th>IP Address</th>
+            <th>Location</th>
+            <th>ISP</th>
+            <th>Duration</th>
+            <th>Timestamp</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="historyTableBody"></tbody>
+      </table>
+      <div class="history-empty" id="historyEmpty" style="display:none">
+        No scans yet. Run your first scan from the Dashboard.
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/static/history.js"></script>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-04-09 13:01:47",
+  "devices": [
+    {
+      "ip": "192.168.1.1",
+      "mac": "4C:06:17:03:2F:50",
+      "vendor": "Taicang T&W Electronics",
+      "hostname": "dsldevice.lan",
+      "type": "Router",
+      "is_new": false,
+      "is_unknown": false,
+      "status_tag": "known"
+    },
+    {
+      "ip": "192.168.1.13",
+      "mac": "E0:01:C7:CF:F7:A8",
+      "vendor": "Unidentified Device",
+      "hostname": "No Hostname",
+      "type": "Generic Device",
+      "is_new": true,
+      "is_unknown": false,
+      "status_tag": "new"
+    },
+    {
+      "ip": "192.168.1.63",
+      "mac": "58:02:05:95:FD:B2",
+      "vendor": "AzureWave Technology Inc.",
+      "hostname": "No Hostname",
+      "type": "Generic Device",
+      "is_new": true,
+      "is_unknown": false,
+      "status_tag": "new"
+    },
+    {
+      "ip": "192.168.1.68",
+      "mac": "B4:8C:9D:91:85:23",
+      "vendor": "AzureWave Technology Inc.",
+      "hostname": "DESKTOP-A6P6FGA",
+      "type": "Laptop/Desktop",
+      "is_new": true,
+      "is_unknown": false,
+      "status_tag": "new"
+    }
+  ]
+}

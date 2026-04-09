@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — WiFiGuard{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <p class="hero-sub">PUBLIC WIFI SECURITY ANALYZER</p>
+    <h1 class="hero-title">Network<br/><span class="gradient-text">Threat Console</span></h1>
+    <p class="hero-desc">
+      Scan for HTTPS, SSL, DNS health, redirect issues, and practical MITM indicators.
+    </p>
+
+    <div class="dash-actions">
+      <button class="scan-btn" id="scanBtn" onclick="startScan()">
+        <span class="scan-btn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </span>
+        <span class="scan-btn-text" id="scanBtnText">Scan Network</span>
+      </button>
+
+      <div class="scan-mode-toggle" role="group" aria-label="Scan mode">
+        <button class="scan-mode-btn active" id="quickModeBtn" onclick="setScanMode('quick')">Quick Scan ⚡</button>
+        <button class="scan-mode-btn" id="fullModeBtn" onclick="setScanMode('full')">Full Scan 🔍</button>
+      </div>
+
+      <label class="toggle">
+        <input type="checkbox" id="monitorToggle" onchange="toggleMonitoring(this.checked)"/>
+        <span class="toggle-ui"></span>
+        <span class="toggle-label">Monitoring Mode</span>
+      </label>
+
+      <a class="ghost-btn" href="/website">Website Scanner →</a>
+    </div>
+
+    <div class="net-info-bar" id="netInfoBar" style="display:none">
+      <div class="net-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+        </svg>
+        <div>
+          <div class="net-info-label">PUBLIC IP</div>
+          <div class="net-info-value" id="niIp">—</div>
+        </div>
+      </div>
+      <div class="net-info-sep"></div>
+      <div class="net-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        <div>
+          <div class="net-info-label">LOCATION</div>
+          <div class="net-info-value" id="niLoc">—</div>
+        </div>
+      </div>
+      <div class="net-info-sep"></div>
+      <div class="net-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+          <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+          <line x1="6" y1="6" x2="6.01" y2="6"/>
+          <line x1="6" y1="18" x2="6.01" y2="18"/>
+        </svg>
+        <div>
+          <div class="net-info-label">ISP / ORG</div>
+          <div class="net-info-value" id="niIsp">—</div>
+        </div>
+      </div>
+      <div class="net-info-sep"></div>
+      <div class="net-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+        <div>
+          <div class="net-info-label">LOCAL IP</div>
+          <div class="net-info-value" id="niLocalIp">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="loading-section" id="loadingSection" style="display:none">
+    <div class="scanner-ring">
+      <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+      <svg class="scan-core" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    </div>
+    <div class="loading-steps" id="loadingSteps">
+      <div class="step-item" data-step="0">⬡ Fetching network information…</div>
+      <div class="step-item" data-step="1">⬡ Checking HTTPS connectivity…</div>
+      <div class="step-item" data-step="2">⬡ Validating SSL certificates…</div>
+      <div class="step-item" data-step="3">⬡ Analyzing DNS behavior…</div>
+      <div class="step-item" data-step="4">⬡ Comparing DNS vs trusted resolver…</div>
+      <div class="step-item" data-step="5">⬡ Detecting captive portals…</div>
+      <div class="step-item" data-step="6">⬡ Checking redirect patterns…</div>
+      <div class="step-item" data-step="7">⬡ Computing risk score…</div>
+    </div>
+  </section>
+
+  <section class="results-section" id="resultsSection" style="display:none">
+    <div class="status-banner" id="statusBanner">
+      <div class="status-icon-wrap" id="statusIconWrap">
+        <svg id="statusIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"></svg>
+      </div>
+      <div class="status-info">
+        <div class="status-label">NETWORK STATUS</div>
+        <div class="status-value" id="statusValue">—</div>
+        <div class="status-meta" id="statusMeta">—</div>
+      </div>
+      <div class="score-ring-wrap">
+        <svg class="score-ring" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+          <circle id="scoreArc" cx="60" cy="60" r="52" fill="none" stroke-width="10"
+                  stroke-dasharray="326.7" stroke-dashoffset="326.7"
+                  stroke-linecap="round" transform="rotate(-90 60 60)"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-num" id="scoreNum">0</div>
+          <div class="score-lbl">/ 100</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-row" id="alertRow" style="display:none"></div>
+
+    <div class="breakdown-row" id="breakdownRow"></div>
+
+    <div class="cards-grid">
+      <div class="detail-card"><div class="card-header"><span>HTTPS Connectivity</span><div class="card-badge" id="httpsBadge">—</div></div><div class="card-body" id="httpsBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>SSL Validation</span><div class="card-badge" id="sslBadge">—</div></div><div class="card-body" id="sslBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>DNS Checks</span><div class="card-badge" id="dnsBadge">—</div></div><div class="card-body" id="dnsBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>Redirect Validation</span><div class="card-badge" id="redirectBadge">—</div></div><div class="card-body" id="redirectBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>MITM Indicators</span><div class="card-badge" id="mitmBadge">—</div></div><div class="card-body" id="mitmBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>Scan Confidence</span><div class="card-badge" id="confBadge">—</div></div><div class="card-body" id="confBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>Local Devices (ARP)</span><div class="card-badge" id="devBadge">—</div></div><div class="card-body" id="devBody"></div></div>
+      <div class="detail-card"><div class="card-header"><span>Gateway Verification</span><div class="card-badge" id="gwBadge">—</div></div><div class="card-body" id="gwBody"></div></div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="detail-card">
+        <div class="card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 15l3-4 4 2 5-7"/>
+          </svg>
+          <span>Risk Score (History)</span>
+          <div class="card-badge" id="riskChartBadge">—</div>
+        </div>
+        <div class="card-body">
+          <canvas id="riskChart" height="120"></canvas>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M11 2a10 10 0 100 20"/><path d="M21 12A10 10 0 0011 2v10z"/>
+          </svg>
+          <span>Threat Distribution</span>
+          <div class="card-badge" id="threatChartBadge">—</div>
+        </div>
+        <div class="card-body">
+          <canvas id="threatChart" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="recommendations-card">
+      <div class="rec-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Security Recommendations
+      </div>
+      <ul class="rec-list" id="recList"></ul>
+    </div>
+
+    <div class="results-actions">
+      <div class="meta-row">
+        <span>📡 <code id="metaIp">—</code></span>
+        <span>⏱ <code id="metaDuration">—</code>s</span>
+        <span>🕐 <code id="metaTime">—</code></span>
+      </div>
+      <div class="action-btns">
+        <button class="rescan-btn" onclick="startScan()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          Scan Again
+        </button>
+        <button class="report-btn" id="reportBtn" onclick="downloadReport()" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+          Download Report
+        </button>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/static/script.js"></script>
+{% endblock %}
+

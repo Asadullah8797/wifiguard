@@ -1,0 +1,5025 @@
+[
+  {
+    "id": 1775719907329,
+    "timestamp": "2026-04-09 13:01:47",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 10.4,
+    "result": {
+      "timestamp": "2026-04-09 13:01:47",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 10.4,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.221.238'] — possible DNS poisoning",
+        "New device detected on your network (3)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 319
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 569
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 346
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 60
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 73
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.221.238"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.221.238'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.221.238"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.192.206"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 4,
+        "new_count": 3,
+        "scan_mode": "full",
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.13",
+            "mac": "E0:01:C7:CF:F7:A8",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.63",
+            "mac": "58:02:05:95:FD:B2",
+            "vendor": "AzureWave Technology Inc.",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.68",
+            "mac": "B4:8C:9D:91:85:23",
+            "vendor": "AzureWave Technology Inc.",
+            "hostname": "DESKTOP-A6P6FGA",
+            "type": "Laptop/Desktop",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775719907329
+    }
+  },
+  {
+    "id": 1775719885037,
+    "timestamp": "2026-04-09 13:01:25",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 7.52,
+    "result": {
+      "timestamp": "2026-04-09 13:01:25",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 7.52,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.221.238'] — possible DNS poisoning"
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 349
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 862
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 699
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 60
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 73
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.221.238"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.221.238'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.221.238"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "172.217.24.238"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 2,
+        "new_count": 0,
+        "scan_mode": "quick",
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.33",
+            "mac": "60:FF:9E:50:64:B2",
+            "vendor": "AzureWave Technology Inc.",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775719885037
+    }
+  },
+  {
+    "id": 1775712108072,
+    "timestamp": "2026-04-09 10:51:48",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 9.34,
+    "result": {
+      "timestamp": "2026-04-09 10:51:48",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 9.34,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.221.238'] — possible DNS poisoning",
+        "New device detected on your network (2)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 761
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 764
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 288
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 60
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 73
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.221.238"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.221.238'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.221.238"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "216.58.196.110"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 3,
+        "new_count": 2,
+        "scan_mode": "quick",
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.33",
+            "mac": "60:FF:9E:50:64:B2",
+            "vendor": "AzureWave Technology Inc.",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.255",
+            "mac": "FF:FF:FF:FF:FF:FF",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775712108072
+    }
+  },
+  {
+    "id": 1775650719982,
+    "timestamp": "2026-04-08 17:48:39",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 7.28,
+    "result": {
+      "timestamp": "2026-04-08 17:48:39",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 7.28,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning",
+        "New device detected on your network (7)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 259
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 413
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 356
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.192.238"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 11,
+        "new_count": 7,
+        "scan_mode": "quick",
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8E:1C:AC:54:07:89",
+            "vendor": "Unidentified Device",
+            "hostname": "MSI",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:FF:9E:51:14:A8",
+            "vendor": "Unidentified Device",
+            "hostname": "RAUNAK",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5F:8D:95:D1:37",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7A:62:D5:CD:8C:56",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.39",
+            "mac": "58:02:05:95:FD:B2",
+            "vendor": "AzureWave Technology Inc.",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.52",
+            "mac": "58:96:1D:C5:0B:B6",
+            "vendor": "Intel Corporate",
+            "hostname": "DESKTOP-GO7VMJO",
+            "type": "Laptop/Desktop",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.89",
+            "mac": "9C:DA:3E:E6:10:9A",
+            "vendor": "Intel Corporate",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:C5:D2:2B:68:0D",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "CE:DB:CE:11:14:01",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:D3:52:8B:62:7D",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775650719982
+    }
+  },
+  {
+    "id": 1775650693320,
+    "timestamp": "2026-04-08 17:48:13",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 8.47,
+    "result": {
+      "timestamp": "2026-04-08 17:48:13",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 8.47,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 227
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 402
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 330
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "172.217.24.78"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 4,
+        "new_count": 0,
+        "scan_mode": "full",
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8E:1C:AC:54:07:89",
+            "vendor": "Unidentified Device",
+            "hostname": "MSI",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5F:8D:95:D1:37",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7A:62:D5:CD:8C:56",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775650693320
+    }
+  },
+  {
+    "id": 1775650669478,
+    "timestamp": "2026-04-08 17:47:49",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 9.17,
+    "result": {
+      "timestamp": "2026-04-08 17:47:49",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 9.17,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 689
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 433
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 816
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.193.110"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 10,
+        "new_count": 0,
+        "scan_mode": "quick",
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8E:1C:AC:54:07:89",
+            "vendor": "Unidentified Device",
+            "hostname": "MSI",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:FF:9E:51:14:A8",
+            "vendor": "Unidentified Device",
+            "hostname": "RAUNAK",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5F:8D:95:D1:37",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7A:62:D5:CD:8C:56",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.52",
+            "mac": "58:96:1D:C5:0B:B6",
+            "vendor": "Intel Corporate",
+            "hostname": "DESKTOP-GO7VMJO",
+            "type": "Laptop/Desktop",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.89",
+            "mac": "9C:DA:3E:E6:10:9A",
+            "vendor": "Intel Corporate",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:C5:D2:2B:68:0D",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "CE:DB:CE:11:14:01",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:D3:52:8B:62:7D",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": false,
+            "status_tag": "known"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775650669478
+    }
+  },
+  {
+    "id": 1775649613306,
+    "timestamp": "2026-04-08 17:30:13",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 141.93,
+    "result": {
+      "timestamp": "2026-04-08 17:30:13",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 141.93,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning",
+        "New device detected on your network (12)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 356
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 416
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 372
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.182.14"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 12,
+        "new_count": 12,
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4C:06:17:03:2F:50",
+            "vendor": "Taicang T&W Electronics",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8E:1C:AC:54:07:89",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:FF:9E:51:14:A8",
+            "vendor": "AzureWave Technology Inc.",
+            "hostname": "RAUNAK",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5F:8D:95:D1:37",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7A:62:D5:CD:8C:56",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.52",
+            "mac": "58:96:1D:C5:0B:B6",
+            "vendor": "Intel Corporate",
+            "hostname": "DESKTOP-GO7VMJO",
+            "type": "Laptop/Desktop",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.89",
+            "mac": "9C:DA:3E:E6:10:9A",
+            "vendor": "Intel Corporate",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:C5:D2:2B:68:0D",
+            "vendor": "Intel Corporate",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "CE:DB:CE:11:14:01",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:D3:52:8B:62:7D",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.56.255",
+            "mac": "FF:FF:FF:FF:FF:FF",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.116.255",
+            "mac": "FF:FF:FF:FF:FF:FF",
+            "vendor": "Unidentified Device",
+            "hostname": "No Hostname",
+            "type": "Generic Device",
+            "is_new": true,
+            "is_unknown": false,
+            "status_tag": "new"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775649613306
+    }
+  },
+  {
+    "id": 1775648701354,
+    "timestamp": "2026-04-08 17:15:01",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 129.56,
+    "result": {
+      "timestamp": "2026-04-08 17:15:01",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 129.56,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning",
+        "New device detected on your network (2)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 250
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 409
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 375
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.220.46"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.220.46"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.192.238"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 13,
+        "new_count": 2,
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4c:06:17:03:2f:50",
+            "vendor": "Unknown",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8e:1c:ac:54:07:89",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:ff:9e:51:14:a8",
+            "vendor": "Unknown",
+            "hostname": "RAUNAK",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5f:8d:95:d1:37",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7a:62:d5:cd:8c:56",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.33",
+            "mac": "60:ff:9e:50:64:b2",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.52",
+            "mac": "58:96:1d:c5:0b:b6",
+            "vendor": "Unknown",
+            "hostname": "DESKTOP-GO7VMJO",
+            "type": "Laptop/Desktop",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.68",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "hostname": "DESKTOP-A6P6FGA",
+            "type": "Laptop/Desktop",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.71",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.89",
+            "mac": "9c:da:3e:e6:10:9a",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:c5:d2:2b:68:0d",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "ce:db:ce:11:14:01",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:d3:52:8b:62:7d",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775648701354
+    }
+  },
+  {
+    "id": 1775648419632,
+    "timestamp": "2026-04-08 17:10:19",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 130.52,
+    "result": {
+      "timestamp": "2026-04-08 17:10:19",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 130.52,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning",
+        "New device detected on your network (1)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 411
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 481
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 412
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.220.46"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.220.46"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.183.238"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 11,
+        "new_count": 1,
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4c:06:17:03:2f:50",
+            "vendor": "Unknown",
+            "hostname": "dsldevice.lan",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8e:1c:ac:54:07:89",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:ff:9e:51:14:a8",
+            "vendor": "Unknown",
+            "hostname": "RAUNAK",
+            "type": "Generic Device",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7a:62:d5:cd:8c:56",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.33",
+            "mac": "60:ff:9e:50:64:b2",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.52",
+            "mac": "58:96:1d:c5:0b:b6",
+            "vendor": "Unknown",
+            "hostname": "DESKTOP-GO7VMJO",
+            "type": "Laptop/Desktop",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.68",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "hostname": "DESKTOP-A6P6FGA",
+            "type": "Laptop/Desktop",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.71",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:c5:d2:2b:68:0d",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "ce:db:ce:11:14:01",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:d3:52:8b:62:7d",
+            "vendor": "Unknown",
+            "hostname": "No Hostname",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775648419632
+    }
+  },
+  {
+    "id": 1775646443332,
+    "timestamp": "2026-04-08 16:37:23",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 124.5,
+    "result": {
+      "timestamp": "2026-04-08 16:37:23",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 124.5,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning",
+        "New device detected on your network (1)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 234
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 379
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 390
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.251.43.174"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 12,
+        "new_count": 1,
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4c:06:17:03:2f:50",
+            "vendor": "Unknown",
+            "type": "Router",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8e:1c:ac:54:07:89",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:ff:9e:51:14:a8",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5f:8d:95:d1:37",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7a:62:d5:cd:8c:56",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.33",
+            "mac": "60:ff:9e:50:64:b2",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.68",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.71",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.89",
+            "mac": "9c:da:3e:e6:10:9a",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:c5:d2:2b:68:0d",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "ce:db:ce:11:14:01",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:d3:52:8b:62:7d",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": false,
+            "is_unknown": true,
+            "status_tag": "unknown"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775646443332
+    }
+  },
+  {
+    "id": 1775645885844,
+    "timestamp": "2026-04-08 16:28:05",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 125.9,
+    "result": {
+      "timestamp": "2026-04-08 16:28:05",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 125.9,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning",
+        "New device detected on your network (12)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 494
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 475
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 384
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.193.110"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 12,
+        "new_count": 12,
+        "list": [
+          {
+            "ip": "192.168.1.1",
+            "mac": "4c:06:17:03:2f:50",
+            "vendor": "Unknown",
+            "type": "Router",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.4",
+            "mac": "8e:1c:ac:54:07:89",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.11",
+            "mac": "60:ff:9e:51:14:a8",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.14",
+            "mac": "22:5f:8d:95:d1:37",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.18",
+            "mac": "7a:62:d5:cd:8c:56",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.34",
+            "mac": "2c:9c:58:70:c0:fb",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.68",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.71",
+            "mac": "b4:8c:9d:91:85:23",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.89",
+            "mac": "9c:da:3e:e6:10:9a",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.92",
+            "mac": "28:c5:d2:2b:68:0d",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.108",
+            "mac": "ce:db:ce:11:14:01",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          },
+          {
+            "ip": "192.168.1.109",
+            "mac": "42:d3:52:8b:62:7d",
+            "vendor": "Unknown",
+            "type": "Unknown",
+            "is_new": true,
+            "is_unknown": true,
+            "status_tag": "new"
+          }
+        ],
+        "disclaimer": "Device detection is based on ARP cache and active probing. Some devices may not appear if inactive or blocked by firewall."
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775645885844
+    }
+  },
+  {
+    "id": 1775643836568,
+    "timestamp": "2026-04-08 15:53:56",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 35,
+    "status": "Risky",
+    "color": "yellow",
+    "duration": 1.29,
+    "result": {
+      "timestamp": "2026-04-08 15:53:56",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 1.29,
+      "risk_score": 35,
+      "status": "Risky",
+      "color": "yellow",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 20,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 3,
+          "max": 15,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 5,
+          "max": 5,
+          "detail": "Captive portal check (informational)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 422
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 492
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 376
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.220.46"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.220.46"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.182.238"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "devices": {
+        "count": 6,
+        "list": [
+          {
+            "ip": "224.0.0.2",
+            "mac": "01:00:5e:00:00:02"
+          },
+          {
+            "ip": "224.0.0.22",
+            "mac": "01:00:5e:00:00:16"
+          },
+          {
+            "ip": "224.0.0.251",
+            "mac": "01:00:5e:00:00:fb"
+          },
+          {
+            "ip": "224.0.0.252",
+            "mac": "01:00:5e:00:00:fc"
+          },
+          {
+            "ip": "239.255.255.250",
+            "mac": "01:00:5e:7f:ff:fa"
+          },
+          {
+            "ip": "192.168.1.1",
+            "mac": "4c:06:17:03:2f:50"
+          }
+        ]
+      },
+      "gateway": {
+        "ip": "192.168.1.1",
+        "mac": "4c:06:17:03:2f:50",
+        "changed": false
+      },
+      "disclaimer": "This analysis is based on heuristic and connectivity checks. It does not guarantee complete network security.",
+      "scan_id": 1775643836568
+    }
+  },
+  {
+    "id": 1775642876867,
+    "timestamp": "2026-04-08 15:37:56",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 72,
+    "status": "Moderate",
+    "color": "cyan",
+    "duration": 1.01,
+    "result": {
+      "timestamp": "2026-04-08 15:37:56",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 1.01,
+      "risk_score": 72,
+      "status": "Moderate",
+      "color": "cyan",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 15,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 0,
+          "max": 10,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 10,
+          "max": 10,
+          "detail": "Captive portal interception check"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 218
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 419
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 368
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.183.14"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "disclaimer": "This tool provides heuristic-based analysis and does not guarantee complete security.",
+      "scan_id": 1775642876867
+    }
+  },
+  {
+    "id": 1775641623245,
+    "timestamp": "2026-04-08 15:17:03",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 72,
+    "status": "Moderate",
+    "color": "cyan",
+    "duration": 1.03,
+    "result": {
+      "timestamp": "2026-04-08 15:17:03",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "192.168.1.20"
+      },
+      "scan_duration_sec": 1.03,
+      "risk_score": 72,
+      "status": "Moderate",
+      "color": "cyan",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "DNS resolution contains unexpected ranges for known domains (low confidence signal).",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack).",
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 15,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 17,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 0,
+          "max": 10,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 10,
+          "max": 10,
+          "detail": "Captive portal interception check"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 243
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 422
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 346
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.220.46"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM indicators detected (SSL/redirect/connectivity) — avoid sensitive logins"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.220.46"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "172.217.24.78"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "disclaimer": "This tool provides heuristic-based analysis and does not guarantee complete security.",
+      "scan_id": 1775641623245
+    }
+  },
+  {
+    "id": 1775641466309,
+    "timestamp": "2026-04-08 15:14:26",
+    "public_ip": "157.49.31.68",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS55836 Reliance Jio Infocomm Limited",
+    "risk_score": 86,
+    "status": "Safe",
+    "color": "green",
+    "duration": 2.31,
+    "result": {
+      "timestamp": "2026-04-08 15:14:26",
+      "client_ip": "157.49.31.68",
+      "network_info": {
+        "public_ip": "157.49.31.68",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS55836 Reliance Jio Infocomm Limited",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315",
+        "local_ip": "10.142.99.129"
+      },
+      "scan_duration_sec": 2.31,
+      "risk_score": 86,
+      "status": "Safe",
+      "color": "green",
+      "confidence": "High",
+      "findings": [
+        "Some HTTP endpoints did not upgrade cleanly to HTTPS.",
+        "Resolver output differs from trusted resolver for some domains (not direct proof of attack)."
+      ],
+      "breakdown": {
+        "https_connectivity": {
+          "points": 20,
+          "max": 20,
+          "detail": "HTTPS connectivity across known domains"
+        },
+        "ssl_validation": {
+          "points": 20,
+          "max": 20,
+          "detail": "TLS certificate validity and expiry checks"
+        },
+        "redirect_validation": {
+          "points": 5,
+          "max": 15,
+          "detail": "HTTP to HTTPS redirect behavior"
+        },
+        "mitm_indicators": {
+          "points": 25,
+          "max": 25,
+          "detail": "MITM indicators from SSL/redirect/connectivity checks"
+        },
+        "dns_health": {
+          "points": 6,
+          "max": 10,
+          "detail": "DNS consistency and trusted resolver comparison (low weight)"
+        },
+        "portal_check": {
+          "points": 10,
+          "max": 10,
+          "detail": "Captive portal interception check"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 541
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 933
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 831
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.250.193.142",
+              "2404:6800:4002:806::200e"
+            ],
+            "expected_prefix_match": true
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "2606:4700::6810:85e5",
+              "104.16.132.229",
+              "2606:4700::6810:84e5",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [],
+      "recommendations": [
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "Network appears safe — a VPN still adds an extra layer of privacy",
+        "Keep your device firewall active and software updated"
+      ],
+      "dns_suspicious": false,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.250.193.142",
+              "2404:6800:4002:806::200e"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.183.238"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "2606:4700::6810:85e5",
+              "104.16.133.229",
+              "2606:4700::6810:84e5"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82",
+              "64:ff9b::14cf:4952"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "disclaimer": "This tool provides heuristic-based analysis and does not guarantee complete security.",
+      "scan_id": 1775641466309
+    }
+  },
+  {
+    "id": 1775640398627,
+    "timestamp": "2026-04-08 14:56:38",
+    "public_ip": "157.49.31.68",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS55836 Reliance Jio Infocomm Limited",
+    "risk_score": 30,
+    "status": "Dangerous",
+    "color": "red",
+    "duration": 2.85,
+    "result": {
+      "timestamp": "2026-04-08 14:56:38",
+      "client_ip": "157.49.31.68",
+      "network_info": {
+        "public_ip": "157.49.31.68",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS55836 Reliance Jio Infocomm Limited",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315"
+      },
+      "scan_duration_sec": 2.85,
+      "risk_score": 30,
+      "status": "Dangerous",
+      "color": "red",
+      "breakdown": {
+        "https_failures": {
+          "penalty": 0,
+          "detail": "0 HTTPS endpoint(s) unreachable"
+        },
+        "ssl_issues": {
+          "penalty": 0,
+          "detail": "0 SSL certificate(s) invalid"
+        },
+        "dns_anomaly": {
+          "penalty": 20,
+          "detail": "DNS responses appear manipulated"
+        },
+        "captive_portal": {
+          "penalty": 0,
+          "detail": "No captive portal detected"
+        },
+        "redirect_issues": {
+          "penalty": 10,
+          "detail": "HTTP not upgraded to HTTPS correctly"
+        },
+        "mitm_heuristics": {
+          "penalty": 5,
+          "detail": "1 MITM indicator(s) found"
+        },
+        "dns_reputation": {
+          "penalty": 15,
+          "detail": "System DNS differs from trusted resolver (8.8.8.8)"
+        },
+        "evil_twin": {
+          "penalty": 20,
+          "detail": "Evil Twin indicators detected (heuristic)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 722
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 1248
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 876
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110",
+              "2404:6800:4002:822::200e"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "2606:4700::6810:84e5",
+              "104.16.132.229",
+              "2606:4700::6810:85e5",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110', '2404:6800:4002:822::200e'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM attack indicators detected — treat this network as hostile",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110",
+              "2404:6800:4002:822::200e"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "172.217.26.46"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "2606:4700::6810:84e5",
+              "104.16.132.229",
+              "2606:4700::6810:85e5",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "64:ff9b::14cf:4952",
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "evil_twin": {
+        "detected": true,
+        "signals": [
+          "DNS mismatch vs trusted resolver (8.8.8.8)",
+          "Unexpected DNS ranges for known domains"
+        ]
+      },
+      "scan_id": 1775640398627
+    }
+  },
+  {
+    "id": 1775640351533,
+    "timestamp": "2026-04-08 14:55:51",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 30,
+    "status": "Dangerous",
+    "color": "red",
+    "duration": 1.18,
+    "result": {
+      "timestamp": "2026-04-08 14:55:51",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315"
+      },
+      "scan_duration_sec": 1.18,
+      "risk_score": 30,
+      "status": "Dangerous",
+      "color": "red",
+      "breakdown": {
+        "https_failures": {
+          "penalty": 0,
+          "detail": "0 HTTPS endpoint(s) unreachable"
+        },
+        "ssl_issues": {
+          "penalty": 0,
+          "detail": "0 SSL certificate(s) invalid"
+        },
+        "dns_anomaly": {
+          "penalty": 20,
+          "detail": "DNS responses appear manipulated"
+        },
+        "captive_portal": {
+          "penalty": 0,
+          "detail": "No captive portal detected"
+        },
+        "redirect_issues": {
+          "penalty": 10,
+          "detail": "HTTP not upgraded to HTTPS correctly"
+        },
+        "mitm_heuristics": {
+          "penalty": 5,
+          "detail": "1 MITM indicator(s) found"
+        },
+        "dns_reputation": {
+          "penalty": 15,
+          "detail": "System DNS differs from trusted resolver (8.8.8.8)"
+        },
+        "evil_twin": {
+          "penalty": 20,
+          "detail": "Evil Twin indicators detected (heuristic)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 261
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 439
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 337
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.43.110"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.43.110'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM attack indicators detected — treat this network as hostile",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.43.110"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.251.43.174"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "evil_twin": {
+        "detected": true,
+        "signals": [
+          "DNS mismatch vs trusted resolver (8.8.8.8)",
+          "Unexpected DNS ranges for known domains"
+        ]
+      },
+      "scan_id": 1775640351533
+    }
+  },
+  {
+    "id": 1775636835703,
+    "timestamp": "2026-04-08 13:57:15",
+    "public_ip": "122.180.240.242",
+    "city": "Delhi",
+    "country": "IN",
+    "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+    "risk_score": 30,
+    "status": "Dangerous",
+    "color": "red",
+    "duration": 1.54,
+    "result": {
+      "timestamp": "2026-04-08 13:57:15",
+      "client_ip": "122.180.240.242",
+      "network_info": {
+        "public_ip": "122.180.240.242",
+        "city": "Delhi",
+        "region": "Delhi",
+        "country": "IN",
+        "isp": "AS24560 Bharti Airtel Ltd., Telemedia Services",
+        "timezone": "Asia/Kolkata",
+        "loc": "28.6519,77.2315"
+      },
+      "scan_duration_sec": 1.54,
+      "risk_score": 30,
+      "status": "Dangerous",
+      "color": "red",
+      "breakdown": {
+        "https_failures": {
+          "penalty": 0,
+          "detail": "0 HTTPS endpoint(s) unreachable"
+        },
+        "ssl_issues": {
+          "penalty": 0,
+          "detail": "0 SSL certificate(s) invalid"
+        },
+        "dns_anomaly": {
+          "penalty": 20,
+          "detail": "DNS responses appear manipulated"
+        },
+        "captive_portal": {
+          "penalty": 0,
+          "detail": "No captive portal detected"
+        },
+        "redirect_issues": {
+          "penalty": 10,
+          "detail": "HTTP not upgraded to HTTPS correctly"
+        },
+        "mitm_heuristics": {
+          "penalty": 5,
+          "detail": "1 MITM indicator(s) found"
+        },
+        "dns_reputation": {
+          "penalty": 15,
+          "detail": "System DNS differs from trusted resolver (8.8.8.8)"
+        },
+        "evil_twin": {
+          "penalty": 20,
+          "detail": "Evil Twin indicators detected (heuristic)"
+        }
+      },
+      "checks": {
+        "https": [
+          {
+            "url": "https://www.google.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 612
+          },
+          {
+            "url": "https://www.cloudflare.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 538
+          },
+          {
+            "url": "https://www.github.com",
+            "status": 200,
+            "ok": true,
+            "latency_ms": 381
+          }
+        ],
+        "ssl": [
+          {
+            "host": "www.google.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun  8 08:39:56 2026 GMT",
+            "days_until_expiry": 61
+          },
+          {
+            "host": "www.cloudflare.com",
+            "valid": true,
+            "hostname_match": true,
+            "expires": "Jun 21 13:12:04 2026 GMT",
+            "days_until_expiry": 74
+          }
+        ],
+        "dns": [
+          {
+            "domain": "google.com",
+            "resolved_ips": [
+              "142.251.220.46"
+            ],
+            "expected_prefix_match": false
+          },
+          {
+            "domain": "cloudflare.com",
+            "resolved_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "expected_prefix_match": true
+          }
+        ],
+        "captive_portal": [
+          {
+            "url": "http://connectivitycheck.gstatic.com/generate_204",
+            "expected_code": 204,
+            "actual_code": 204,
+            "final_url": "http://connectivitycheck.gstatic.com/generate_204",
+            "intercepted": false
+          },
+          {
+            "url": "http://www.msftconnecttest.com/connecttest.txt",
+            "expected_code": 200,
+            "actual_code": 200,
+            "final_url": "http://www.msftconnecttest.com/connecttest.txt",
+            "intercepted": false
+          }
+        ],
+        "redirects": [
+          {
+            "original": "http://www.google.com",
+            "final": "http://www.google.com",
+            "upgraded_to_https": false
+          },
+          {
+            "original": "http://www.github.com",
+            "final": "https://github.com/",
+            "upgraded_to_https": true
+          }
+        ]
+      },
+      "mitm_warnings": [
+        "DNS for google.com returned unexpected IPs ['142.251.220.46'] — possible DNS poisoning"
+      ],
+      "recommendations": [
+        "Use a trusted VPN to encrypt all traffic on this network",
+        "Enable encrypted DNS (DoH/DoT) — try Cloudflare 1.1.1.1 or Google 8.8.8.8",
+        "HTTP traffic not properly upgraded to HTTPS — avoid unencrypted sites",
+        "MITM attack indicators detected — treat this network as hostile",
+        "Disconnect immediately and switch to mobile data",
+        "Change passwords for accounts accessed on this network"
+      ],
+      "dns_suspicious": true,
+      "captive_portal_detected": false,
+      "redirect_suspicious": true,
+      "dns_reputation": {
+        "trusted_dns": "8.8.8.8",
+        "results": [
+          {
+            "domain": "google.com",
+            "system_ips": [
+              "142.251.220.46"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "142.250.193.14"
+            ],
+            "overlap": false,
+            "mismatch": true,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "cloudflare.com",
+            "system_ips": [
+              "104.16.132.229",
+              "104.16.133.229"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "104.16.133.229",
+              "104.16.132.229"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          },
+          {
+            "domain": "github.com",
+            "system_ips": [
+              "20.207.73.82"
+            ],
+            "trusted_dns": "8.8.8.8",
+            "trusted_ips": [
+              "20.207.73.82"
+            ],
+            "overlap": true,
+            "mismatch": false,
+            "system_error": null,
+            "trusted_error": null
+          }
+        ],
+        "mismatch": true
+      },
+      "evil_twin": {
+        "detected": true,
+        "signals": [
+          "DNS mismatch vs trusted resolver (8.8.8.8)",
+          "Unexpected DNS ranges for known domains"
+        ]
+      },
+      "scan_id": 1775636835703
+    }
+  }
+]
