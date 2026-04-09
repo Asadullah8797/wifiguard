@@ -3,7 +3,7 @@ WiFiGuard — Public WiFi Security Analyzer
 Backend: Flask + ReportLab
 """
 
-import os, io, json, time, socket, ssl, urllib.request, urllib.error, datetime, subprocess, re
+import os, io, json, time, socket, ssl, urllib.request, urllib.error, datetime, subprocess, re, threading
 from urllib.parse import urlparse, urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -21,6 +21,9 @@ SCAN_LOG_PATH = os.path.join(DATA_DIR, 'scan_history.json')
 OUI_DB_PATH = os.path.join(DATA_DIR, 'oui.json')
 _VENDOR_CACHE: dict[str, str] = {}
 _DEVICE_SCAN_CACHE: dict[str, dict] = {}
+HISTORY_TTL_HOURS = 24
+HISTORY_CLEANUP_INTERVAL_SECONDS = 15 * 60  # every 15 minutes
+_CLEANUP_THREAD_STARTED = False
 
 
 def _ensure_data_dir():
@@ -42,7 +45,73 @@ def _load_scan_log():
     return []
 
 
+def _record_created_at_utc(record: dict):
+    # Preferred source: created_at (ISO UTC). Legacy fallback: timestamp.
+    created = record.get('created_at')
+    if isinstance(created, str) and created:
+        try:
+            return datetime.datetime.fromisoformat(created)
+        except Exception:
+            pass
+    ts = record.get('timestamp')
+    if isinstance(ts, str) and ts:
+        try:
+            return datetime.datetime.strptime(ts, '%Y-%m-%d %H:%M:%S')
+        except Exception:
+            pass
+    return None
+
+
+def delete_old_scans(ttl_hours: int = HISTORY_TTL_HOURS):
+    """
+    Remove scan records older than ttl_hours.
+    Safe for background execution; never raises to caller.
+    """
+    try:
+        cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=ttl_hours)
+        log = _load_scan_log()
+        kept = []
+        removed = 0
+        for rec in log:
+            if not isinstance(rec, dict):
+                continue
+            created_at = _record_created_at_utc(rec)
+            if created_at is None:
+                # Keep unknown legacy records rather than accidental loss.
+                kept.append(rec)
+                continue
+            if created_at >= cutoff:
+                kept.append(rec)
+            else:
+                removed += 1
+        if removed > 0:
+            _ensure_data_dir()
+            with open(SCAN_LOG_PATH, 'w', encoding='utf-8') as f:
+                json.dump(kept, f, ensure_ascii=False, indent=2)
+            app.logger.info(f'[history_cleanup] removed={removed} ttl_hours={ttl_hours}')
+    except Exception as e:
+        # Do not crash app if cleanup fails.
+        app.logger.warning(f'[history_cleanup] failed: {e}')
+
+
+def _history_cleanup_worker():
+    while True:
+        delete_old_scans()
+        time.sleep(HISTORY_CLEANUP_INTERVAL_SECONDS)
+
+
+def start_history_cleanup_thread():
+    global _CLEANUP_THREAD_STARTED
+    if _CLEANUP_THREAD_STARTED:
+        return
+    _CLEANUP_THREAD_STARTED = True
+    t = threading.Thread(target=_history_cleanup_worker, daemon=True, name='history-cleanup')
+    t.start()
+
+
 def _append_scan_log(entry: dict, limit: int = 50):
+    # Opportunistic cleanup on write path.
+    delete_old_scans()
     log = _load_scan_log()
     log.insert(0, entry)
     log = log[:limit]
@@ -1808,6 +1877,7 @@ def scan():
         result['scan_id'] = scan_id
         _append_scan_log({
             'id': scan_id,
+            'created_at': datetime.datetime.utcnow().isoformat(),
             'timestamp': timestamp,
             'public_ip': network_info.get('public_ip'),
             'city': network_info.get('city'),
@@ -1826,6 +1896,7 @@ def scan():
 
 @app.route('/api/history')
 def api_history():
+    delete_old_scans()
     log = _load_scan_log()
     history = [{
         'id': h.get('id'),
@@ -1844,6 +1915,7 @@ def api_history():
 
 @app.route('/api/scan/<int:scan_id>')
 def api_scan(scan_id):
+    delete_old_scans()
     log = _load_scan_log()
     for h in log:
         if isinstance(h, dict) and h.get('id') == scan_id:
@@ -1883,6 +1955,7 @@ def api_website_report():
 
 @app.route('/report/<int:scan_id>')
 def download_report(scan_id):
+    delete_old_scans()
     log = _load_scan_log()
     for h in log:
         if isinstance(h, dict) and h.get('id') == scan_id:
@@ -1905,6 +1978,8 @@ def download_report(scan_id):
 @app.route('/health')
 def health():
     return jsonify({'status': 'ok', 'service': 'WiFiGuard', 'version': '2.0.0'})
+
+start_history_cleanup_thread()
 
 if __name__ == '__main__':
     try:
